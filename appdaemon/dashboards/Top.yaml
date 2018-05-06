@@ -1,0 +1,98 @@
+#
+# Main arguments, all optional
+#
+
+
+clock:
+    widget_type: clock
+    time_format: 24hr
+
+weather:
+    widget_type: weather
+#    title: 
+    show_foreacast: 1
+    prefer_icons: 1
+    forecast_title: Tomorrow
+    sensors:
+        icon: sensor.dark_sky_icon
+        temperature: sensor.dark_sky_temperature
+        apparent_temperature: sensor.dark_sky_apparent_temperature
+        humidity: sensor.dark_sky_humidity
+        precip_probability: sensor.dark_sky_precip_probability
+        precip_intensity: sensor.dark_sky_precip_intensity
+        precip_type: sensor.dark_sky_precip
+        pressure: sensor.dark_sky_pressure
+        wind_speed: sensor.dark_sky_wind_speed
+        wind_bearing: sensor.dark_sky_wind_bearing
+        forecast_icon: sensor.dark_sky_icon_1
+        forecast_temperature_min: sensor.dark_sky_daily_low_temperature_1
+        forecast_temperature_max: sensor.dark_sky_daily_high_temperature_1
+        forecast_precip_probability: sensor.dark_sky_precip_probability_1
+        forecast_precip_type: sensor.dark_sky_precip_1 
+
+garage_temp:
+    widget_type: sensor
+    title: Autotalli
+    precision: 1
+    entity: sensor.autotalli_lampo
+
+garage_temp:
+    widget_type: sensor
+    title: Autotalli
+    precision: 1
+    entity: sensor.autotalli_lampo
+
+floor_temp:
+    widget_type: sensor
+    title: Lattialämmitys
+    precision: 1
+    entity: sensor.lattialammitys
+
+floor_temp_gauge:
+    widget_type: gauge
+    #widget_style: "color: red; background: red"
+    title: Lattialämmitys
+    max: 40
+    min: 18
+    precision: 1
+    units: "°C"
+    entity: sensor.lattialammitys
+
+outdoor_temp:
+    widget_type: sensor
+    title: Ulkolämpö
+    precision: 1
+    entity: sensor.ulkolampo
+
+electricity_power:
+    widget_type: gauge
+    #widget_style: "color: red; background: red"
+    title: Sähkönkulutus
+    max: 5000
+    min: 0
+    #low_color: 
+    #med_color: "gray"
+    #high_color: "red"
+    #precision: 1
+    units: "W"
+    entity: sensor.sahko_w
+
+water_ltr_per_min:
+    widget_type: gauge
+    #widget_style: "color: red; background: red"
+    title: Vedenkulutus
+    max: 30
+    min: 0
+    precision: 1
+    units: "ltr/min"
+    entity: sensor.vesi
+
+layout:
+    - weather(2x2),               clock(1x1),   sensor.kylpyhuone_lampo,   sensor.makuuhuone_lampo,   garage_temp,              sensor.autotalli_ldr,   sensor.keittio,     floor_temp,         floor_temp_gauge               
+    -                             outdoor_temp, sensor.kylpyhuone_kosteus, sensor.makuuhuone_kosteus, sensor.autotalli_kosteus, sensor.olohuone_lux,    sensor.sahko_w,     electricity_power,  water_ltr_per_min  
+#    - sensor.kylpyhuone_kosteus
+#    - wc_uplight, wc_downlight, sensor.sahko_w  
+#    - garage_heater, car_heater
+#    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

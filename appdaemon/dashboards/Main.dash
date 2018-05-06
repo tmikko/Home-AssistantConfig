@@ -1,0 +1,99 @@
+#
+# Main arguments, all optional
+#
+title: Main panel
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 10
+global_parameters:
+  devices:
+    group:
+      step: 20
+
+label:
+    widget_type: label
+    text: Hello World
+  
+
+car_heater:
+    widget_type: switch
+    title: Auton lämmitys
+    icon_on: mdi-car
+    icon_off: mdi-car
+    entity: switch.auton_lammitys
+
+garage_heater:
+    widget_type: switch
+    title: Autotallin
+    title2: lämmitys
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    entity: switch.autotallin_lampopuhallin
+
+
+wc_uplight:
+    widget_type: light
+    title: WC ylävalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_ylavalo  
+
+wc_downlight:
+    widget_type: light
+    title: WC alavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_alavalo
+
+garage_temperature:
+    widget_type: temperature
+    entity: sensor.autotalli_lampo
+    settings:
+      minValue: 4
+      maxValue: 10
+      width: 120
+      height: 120
+      majorTicks: [0,5,10,15]
+      highlights: [{'from': 0, 'to': 5, 'color': 'rgba(0,0, 255, .3)'},{'from': 6, 'to': 10, 'color': 'rgba(255, 0, 0, .3)'}]
+
+your_radial:
+    widget_type: radial
+    entity: sensor.autotalli_lampo
+    settings:
+      title: any title
+      minValue: 0
+      maxValue: 10
+      majorTicks: [0,2,4,6,8,10]
+      highlights: [{'from': 0, 'to': 2, 'color': 'rgba(0,0, 255, .3)'},{'from': 3, 'to': 10, 'color': 'rgba(255, 0, 0, .3)'}]
+
+test_input_select:
+    widget_type: input_select
+    entity: input_select.living_room_preset
+
+test_mode:
+    widget_type: mode
+    entity: input_select.living_room_preset
+    mode: Visitors
+#    state_text: teksti
+
+home_alarm:
+    widget_type: alarm
+    entity: alarm_control_panel.home_alarm
+
+office_cam:
+    widget_type: camera
+    entity_picture: http://192.168.1.74:8123/api/camera_proxy_stream/camera.office_cam?api_password=Mt986498
+
+kitchen_camera:
+    widget_type: camera
+    entity_picture: http://192.168.1.74:8123/api/camera_proxy_stream/camera.kitchen_cam?api_password=Mt986498
+
+layout:
+#    - include: Top
+    - office_cam(5x4), kitchen_camera(5x4)
+    -
+    -
+    -
+    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

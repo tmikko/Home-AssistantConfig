@@ -3,5 +3,8 @@
 !*.dash
 !scenes
 !.gitignore
+!appdaemon/
+!appdaemon/apps/
+!appdaemon/dashboards/
 secrets.yaml
 known_devices.yaml

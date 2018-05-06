@@ -1,0 +1,79 @@
+#
+# Main arguments, all optional
+#
+tyohuone_ylavalo:
+    widget_type: switch
+    title: TH Ylävalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.tyohuone_ylavalo
+
+tyohuone_alavalo:
+    widget_type: switch
+    title: TH Alavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.tyohuone_alavalo
+
+tyohuone_genelec:
+    widget_type: switch
+    title: TH Genelec
+    icon_on: mdi-speaker
+    icon_off: mdi-speaker-off
+    entity: switch.tyohuone_genelec
+
+makuuhuone_yopoyta_1:
+    widget_type: switch
+    title: MH yöpöytä Mikko
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.makuuhuone_yopoyta1
+
+huippuimuri:
+    widget_type: switch
+    title: Huippuimuri
+    title2: täysi teho
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    icon_style_active: "color: red"
+    entity: switch.huippuimuri
+
+garage_extra_heating_2h:
+    widget_type: switch
+    title: Autotallin
+    title2: lisälämmitys 2h
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    icon_style_active: "color: red"
+    entity: switch.autotallin_lisalammitys_2h
+
+car_heater:
+    widget_type: switch
+    title: Auton lämmitys
+    icon_on: mdi-car  
+    icon_off: mdi-car
+    icon_style_active: "color: red"
+    entity: switch.auton_lammitys
+
+garage_heater:
+    widget_type: switch
+    title: Autotallin
+    title2: lämmitys
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    entity: switch.autotallin_lampopuhallin
+
+garage_aircon:
+    widget_type: switch
+    title: Autotallin
+    title2: kuivain
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    entity: switch.autotallin_kuivain
+
+layout:
+#    - include: Top
+    - tyohuone_alavalo, tyohuone_ylavalo, tyohuone_genelec, makuuhuone_yopoyta_1, huippuimuri, garage_heater, garage_extra_heating_2h, garage_aircon, car_heater
+#    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

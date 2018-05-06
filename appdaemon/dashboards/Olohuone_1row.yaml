@@ -1,0 +1,81 @@
+#
+# Main arguments, all optional
+#
+
+olohuone_spotit_ikkuna_oikea:
+    widget_type: light
+    title: OH Spotit 3
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_ikkunaseina_oikea_ha
+
+olohuone_spotit_ikkuna_vasen:
+    widget_type: light
+    title: OH Spotit 2
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_ikkunaseina_vasen_ha
+
+
+olohuone_spotit_tv-seina:
+    widget_type: light
+    title: OH Spotit 1
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_tvseina_ha
+
+olohuone_hue1:
+    widget_type: light
+    title: OH Hue 1
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_1
+
+olohuone_hue2:
+    widget_type: light
+    title: OH Hue 2
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_2
+
+olohuone_hue3:
+    widget_type: light
+    title: OH Hue 3
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_3
+
+olohuone_tv:
+    widget_type: switch
+    title: TV
+    icon_on: mdi-television
+    icon_off: mdi-television
+    entity: media_player.58dx700_olohuon
+
+olohuone_avr:
+    widget_type: switch
+    title: Denon AVR
+    icon_on: mdi-speaker
+    icon_off: mdi-speaker-off
+    entity: media_player.denon_avrx2100w
+
+olohuone_avr_controls:
+    widget_type: media_player
+    title: Denon AVR
+    icon_on: mdi-speaker
+    icon_off: mdi-speaker-off
+    entity: media_player.denon_avrx2100w
+
+olohuone_appletv:
+    title: OH AppleTV
+    widget_type: media_player
+    entity: media_player.apple_tv_olohuone
+
+
+
+
+layout:
+    - olohuone_spotit_tv-seina, olohuone_spotit_ikkuna_vasen,   olohuone_spotit_ikkuna_oikea,    olohuone_hue1,  olohuone_hue2, olohuone_hue3, olohuone_tv, olohuone_avr
+#    - olohuone_avr_controls(2x2),                                 olohuone_appletv(2x2),                             olohuone_avr
+
+

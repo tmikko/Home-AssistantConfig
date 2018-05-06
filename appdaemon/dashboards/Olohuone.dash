@@ -1,0 +1,98 @@
+#
+# Main arguments, all optional
+#
+title: Olohuone
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 8
+
+label:
+    widget_type: label
+    text: Hello World
+  
+
+
+olohuone_spotit_ikkuna_oikea:
+    widget_type: light
+    title: Spotit 3
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_ikkunaseina_oikea
+
+olohuone_spotit_ikkuna_vasen:
+    widget_type: light
+    title: Spotit 2
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_ikkunaseina_vasen
+
+
+olohuone_spotit_tv-seina:
+    widget_type: light
+    title: Spotit 1
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.oh_spotit_tvseina
+
+olohuone_nurkkavalo:
+    widget_type: switch
+    title: Nurkkavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.oh_nurkkavalo
+
+olohuone_hue1:
+    widget_type: light
+    title: Hue 1
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_1
+
+olohuone_hue2:
+    widget_type: light
+    title: Hue 2
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_2
+
+olohuone_hue3:
+    widget_type: light
+    title: Hue 3
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.hue_color_lamp_3
+
+olohuone_tv:
+    widget_type: switch
+    title: TV
+    icon_on: mdi-television
+    icon_off: mdi-television
+    entity: media_player.58dx700_olohuon
+
+olohuone_avr:
+    widget_type: switch
+    title: Denon AVR
+    icon_on: mdi-speaker
+    icon_off: mdi-speaker-off
+    entity: media_player.denon_avrx2100w
+
+olohuone_avr_controls:
+    widget_type: media_player
+    title: Denon AVR
+    icon_on: mdi-speaker
+    icon_off: mdi-speaker-off
+    entity: media_player.denon_avrx2100w
+
+olohuone_appletv:
+    title: AppleTV
+    widget_type: media_player
+    entity: media_player.apple_tv_olohuone
+
+
+layout:
+    - include: Top
+    - olohuone_spotit_tv-seina,     olohuone_spotit_ikkuna_vasen, olohuone_spotit_ikkuna_oikea, olohuone_nurkkavalo, olohuone_hue1, olohuone_hue2, olohuone_hue3
+    - olohuone_avr_controls(2x2),                                 olohuone_appletv(2x2),                             olohuone_avr
+    -                                                                                                                olohuone_tv
+    - include: Bottom
+

@@ -1,0 +1,114 @@
+#
+# Main arguments, all optional
+#
+
+keittio_tyotasot:
+    widget_type: light
+    title: Keittiö työtasot
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.keittio_tyotasot_ha  
+    #on_attributes:
+    #    brightness: 100  
+
+keittio_ruokapoyta:
+    widget_type: light
+    title: Ruokapoyta
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.ruokapoyta_ha
+    #monitored_entity: light.ruokapoyta_1
+    on_attributes:
+        brightness: 150
+        #color_temp: 150
+
+keittio_katto:
+    widget_type: light
+    title: Keittiö katto
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.keittion_katto_ha
+    #monitored_entity: light.keittio_katto_21
+    on_attributes:
+        brightness: 150
+        #color_temp: 100
+
+#car_heater:
+#    widget_type: switch
+#    title: Auton lämmitys
+#    icon_on: mdi-car
+#    icon_off: mdi-car
+#    entity: switch.auton_lammitys
+
+#garage_heater:
+#    widget_type: switch
+#    title: Autotallin
+#    title2: lämmitys
+#    icon_on: mdi-fan
+#    icon_off: mdi-fan
+#    entity: switch.autotallin_lampopuhallin
+
+wc_uplight:
+    widget_type: light
+    title: WC ylävalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_ylavalo  
+
+wc_downlight:
+    widget_type: light
+    title: WC alavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_alavalo
+
+etupiha_pylvasvalo:
+    widget_type: switch
+    title: Etupiha käpy
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.etupiha_pylvasvalo
+
+takapiha_pylvasvalo:
+    widget_type: switch
+    title: Takapiha pylväs
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.takapiha_pylvasvalo
+
+olohuone_puukoriste:
+    widget_type: switch
+    title: OH koristepuu
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.olohuone_koristepuu
+
+olohuone_nurkkavalo:
+    widget_type: switch
+    title: OH Nurkkavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.oh_nurkkavalo_ha
+
+garage_lights:
+  title: Autotallin valot
+  widget_type: icon
+  entity: binary_sensor.garage_lights_on
+#  state_text: 1
+  icons:
+    "on":
+      icon: mdi-lightbulb-on-outline
+      style: "color: red"
+    "off":
+      icon: mdi-lightbulb-outline
+      style: "color: grey"
+    "idle":
+      icon: fa-frown-o
+      style: "color: red"
+    "default":
+      icon: fa-rocket
+      style: "color: cyan"
+
+layout:
+    - keittio_tyotasot, keittio_ruokapoyta, keittio_katto, wc_uplight, wc_downlight, etupiha_pylvasvalo, takapiha_pylvasvalo, olohuone_puukoriste, olohuone_nurkkavalo, garage_lights
+

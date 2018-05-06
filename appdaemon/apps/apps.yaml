@@ -1,0 +1,142 @@
+hello_world:
+  module: hello
+  class: HelloWorld
+
+notify_sensor_mikko_test:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.wc_ldr
+  range_min: 50 
+  range_max: 100
+  verbose_log: true
+#  notify: true 
+
+notify_sensor_ulkolampo:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.ulkolampo
+  range_min: -30 
+  range_max: 50
+  verbose_log: true
+  reading_validity_time: 1800
+  notify: true 
+
+notify_sensor_autotalli_kosteus:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.autotalli_kosteus
+  range_min: 25 
+  range_max: 60
+  verbose_log: true
+  reading_validity_time: 1800 
+  notify: true
+
+notify_sensor_autotalli_kosteus_bruh:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.autotalli_kosteus_bruh
+  range_min: 20 
+  range_max: 55
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_autotalli_lampo:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.autotalli_lampo
+  range_min: 5 
+  range_max: 20
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_autotalli_lampo_bruh:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.autotalli_lampo_bruh
+  range_min: 5 
+  range_max: 20
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_kylpyhuone_kosteus:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.kylpyhuone_kosteus
+  range_min: 10 
+  range_max: 70
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: 
+
+notify_sensor_kylpyhuone_lampo:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.kylpyhuone_lampo
+  range_min: 16 
+  range_max: 26
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_lattialammitys:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.lattialammitys
+  range_min: 18 
+  range_max: 38
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_makuuhuone_lampo:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.makuuhuone_lampo
+  range_min: 15 
+  range_max: 25
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_makuuhuone_kosteus:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.makuuhuone_kosteus
+  range_min: 14 
+  range_max: 50
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_mh_janna:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.mh_janna
+  range_min: 15 
+  range_max: 25
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_sahko_w:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.sahko_w
+  range_min: 150 
+  range_max: 10000
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true
+
+notify_sensor_varasto:
+  module: notify_sensor
+  class: SensorNotification
+  sensor: sensor.varasto
+  range_min: 10 
+  range_max: 25
+  reading_validity_time: 1800
+  verbose_log: true 
+  notify: true

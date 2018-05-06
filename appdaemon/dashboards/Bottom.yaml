@@ -1,0 +1,107 @@
+#
+# Main arguments, all optional
+#
+
+open_main:
+    widget_type: navigate
+    title: Kamerat
+    dashboard: Main
+    args:
+      timeout: 20
+      sticky: 1
+      return: All
+#    args:
+#      timeout: 5
+#      return: Main 
+
+open_keittio:
+    widget_type: navigate
+    title: Keittiö
+    dashboard: Keittio
+    args:
+      timeout: 10
+      sticky: 1
+      return: All
+
+open_olohuone:
+    widget_type: navigate
+    title: Olohuone
+    dashboard: Olohuone
+    args:
+      timeout: 10
+      sticky: 1
+      return: All
+
+open_tyohuone:
+    widget_type: navigate
+    title: Työhuone
+    dashboard: Tyohuone
+    args:
+      timeout: 10
+      sticky: 1
+      return: All
+
+open_piha:
+    widget_type: navigate
+    title: Piha
+    dashboard: Piha
+    args:
+      timeout: 10
+      sticky: 1
+      return: All
+
+open_all:
+    widget_type: navigate
+    title: All
+    dashboard: All
+    args:
+      timeout: 10
+      sticky: 1
+      return: All
+
+onh_floorplan:
+    widget_type: navigate
+    title: Pohjakuva
+    url: http://192.168.1.99:8020/home
+    args:
+      page: plan
+
+reload:
+    widget_type: reload
+
+home_alarm:
+    widget_type: alarm
+    entity: alarm_control_panel.home_alarm
+
+alarm_icon:
+  title: Kulunvalvonta
+  widget_type: icon
+  entity: alarm_control_panel.home_alarm
+  state_text: 1
+  state_map:
+    "disarmed": "Ei kytketty"
+    "armed_home": "Kytketty: kotona"
+    "armed_away": "Kytketty: poissa"
+    "pending": "Viivetoiminto"
+    "trigger": "Hälyttää!"
+  icons:
+    "disarmed":
+      icon: mdi-bell-off
+      style: "color: #ACFD32"
+    "armed_home":
+      icon: mdi-bell
+      style: "color: yellow"
+    "armed_away":
+      icon: mdi-bell
+      style: "color: red"
+    "pending":
+      icon: mdi-bell-sleep
+      style: "color: cyan" 
+    "triggered":
+      icon: mdi-bell-ring
+      style: "color: red"   
+
+layout:
+    - open_main, open_keittio, open_olohuone, open_tyohuone, open_piha, open_all, onh_floorplan, reload, home_alarm, alarm_icon
+
+

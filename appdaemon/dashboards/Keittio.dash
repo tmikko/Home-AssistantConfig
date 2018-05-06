@@ -1,0 +1,63 @@
+#
+# Main arguments, all optional
+#
+title: Keittiö
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 10
+global_parameters:
+
+label:
+    widget_type: label
+    text: Hello World
+  
+
+
+keittio_tyotasot:
+    widget_type: light
+    title: Työtasot
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.keittio_tyotasot  
+    on_attributes:
+        brightness: 100  
+
+keittio_ruokapoyta:
+    widget_type: group
+    title: Ruokapoyta
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.ruokapoyta
+    monitored_entity: light.ruokapoyta_1
+    on_attributes:
+        brightness: 100
+
+keittio_katto:
+    widget_type: group
+    title: Katto
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.keittio_kattovalot
+    monitored_entity: light.keittio_katto_11
+    on_attributes:
+        brightness: 100
+
+test:
+    widget_type: input_slider
+    title: test
+    entity: light.keittio_kattovalot
+
+kitchen_camera:
+    widget_type: camera
+    entity_picture: http://192.168.1.74:8123/api/camera_proxy_stream/camera.kitchen_cam?api_password=Mt986498
+
+layout:
+    - include: Top
+    - kitchen_camera(4x3)
+    -
+    -
+#    - keittio_tyotasot, keittio_ruokapoyta, keittio_katto, test
+#    - garage_heater, car_heater
+    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

@@ -1,0 +1,74 @@
+#
+# Main arguments, all optional
+#
+title: Hello Panel
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 8
+
+label:
+    widget_type: label
+    text: Hello World
+  
+clock:
+    widget_type: clock
+    time_format: 24hr
+
+weather:
+    widget_type: weather
+    units: "&deg;C" 
+
+garage_temp:
+    widget_type: sensor
+    title: Autotalli
+    precision: 1
+    entity: sensor.autotalli_lampo
+
+outdoor_temp:
+    widget_type: sensor
+    title: Ulkolämpö
+    precision: 1
+    entity: sensor.ulkolampo
+
+car_heater:
+    widget_type: switch
+    title: Auton lämmitys
+    icon_on: mdi-car
+    icon_off: mdi-car
+    entity: switch.auton_lammitys
+
+garage_heater:
+    widget_type: switch
+    title: Autotallin
+    title2: lämmitys
+    icon_on: mdi-fan
+    icon_off: mdi-fan
+    entity: switch.autotallin_lampopuhallin
+
+
+wc_uplight:
+    widget_type: light
+    title: WC ylävalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_ylavalo  
+
+wc_downlight:
+    widget_type: light
+    title: WC alavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: light.wc_alavalo
+
+reload:
+    widget_type: reload    
+
+layout:
+    - weather(2x2), clock(1x1)
+    - outdoor_temp
+    - sensor.kylpyhuone_kosteus, sensor.autotalli_kosteus, garage_temp 
+#    - sensor.kylpyhuone_kosteus
+    - wc_uplight, wc_downlight, sensor.sahko_w  
+    - garage_heater, car_heater, reload
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

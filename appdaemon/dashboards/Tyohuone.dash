@@ -1,0 +1,41 @@
+#
+# Main arguments, all optional
+#
+title: Tyohuone
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 10
+
+tyohuone_ylavalo:
+    widget_type: switch
+    title: Ylävalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.tyohuone_seinakaappi_ylavalo
+
+tyohuone_alavalo:
+    widget_type: switch
+    title: Alavalo
+    icon_on: mdi-lightbulb-on-outline
+    icon_off: mdi-lightbulb-outline
+    entity: switch.tyohuone_alavalo
+
+#iframe:
+#    widget_type: iframe
+#    title: Webcam
+#    refresh: 1
+#    url_list: http://192.168.1.99:8020/home?page=plan
+
+office_cam:
+    widget_type: camera
+    entity_picture: http://192.168.1.74:8123/api/camera_proxy_stream/camera.office_cam?api_password=Mt986498
+
+layout:
+    - include: Top
+    - office_cam(4x3)
+    -
+    -
+#    - tyohuone_alavalo, tyohuone_ylavalo
+    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+

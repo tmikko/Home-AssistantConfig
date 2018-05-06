@@ -1,0 +1,19 @@
+#
+# Main arguments, all optional
+#
+title: All
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 10
+global_parameters:
+#  precision: 1
+
+layout:
+    - include: Top
+    - include: Keittio_1row
+    - include: Olohuone_1row
+    - include: Tyohuone_1row
+#    - olohuone_avr_controls(2x2),                                 olohuone_appletv(2x2),                             olohuone_avr
+#    -                                                                                                                olohuone_tv
+    - include: Bottom
+

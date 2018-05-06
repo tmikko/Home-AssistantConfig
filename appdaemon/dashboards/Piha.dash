@@ -1,0 +1,41 @@
+#
+# Main arguments, all optional
+#
+title: Piha
+widget_dimensions: [120, 120]
+widget_margins: [5, 5]
+columns: 8
+
+
+iframe:
+    widget_type: iframe
+    title: Cats
+    refresh: 60
+    url_list:
+      - https://www.pexels.com/photo/grey-and-white-short-fur-cat-104827/
+      - https://www.pexels.com/photo/eyes-cat-coach-sofa-96938/
+      - https://www.pexels.com/photo/silver-tabby-cat-lying-on-brown-wooden-surface-126407/
+      - https://www.pexels.com/photo/kitten-cat-rush-lucky-cat-45170/
+      - https://www.pexels.com/photo/grey-fur-kitten-127028/
+      - https://www.pexels.com/photo/cat-whiskers-kitty-tabby-20787/
+      - https://www.pexels.com/photo/cat-sleeping-62640/
+#webcam:
+#    widget_type: camera
+#    https://www.earthcam.com/usa/newyork/timessquare/?cam=tsrobo3
+
+#camera:
+#    widget_type: camera
+#    entity_picture: http://192.168.1.74:8132/api/camera_proxy/camera.ip_camera?token=6d3246a14edffdb4104c160e3df83765f9e1181e2d8271f07b80c4c31ca2d748
+
+kitchen_camera:
+    widget_type: camera
+    entity_picture: http://192.168.1.74:8123/api/camera_proxy/camera.kitchen_cam?api_password=Mt986498
+
+layout:
+    - include: Top
+    - kitchen_camera(3x2)
+    -
+    -
+    - include: Bottom
+#    - switch.tyohuone_seinakaappi_alavalo, switch.tyohuone_seinakaappi_ylavalo
+
