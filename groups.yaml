@@ -1,0 +1,27 @@
+#keittio_katto_group:
+#  name: Keittio katto 
+#  view: no
+#  entities:
+#    - light.keittio_katto_11
+#    - light.keittio_katto_12
+#    - light.keittio_katto_13
+#    - light.keittio_katto_14
+#    - light.keittio_katto_21
+#    - light.keittio_katto_22
+#    - light.keittio_katto_23
+#    - light.keittio_katto_24
+
+#keittio_ruokapoyta_group:
+#  name: Keittio ruokapöytä
+#  view: no
+#  entities:
+#    - light.ruokapoyta_1
+#    - light.ruokapoyta_2
+
+#keittio_lights_group:
+#  name: Keittiön valot
+#  view: yes
+#  entities:
+#    - group.keittio_katto_group
+#    - group.keittio_ruokapoyta_group
+#    - light.keittio_tyotasot

@@ -1,0 +1,12 @@
+- alias: Notify iOS app
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.autotalli_lampo
+    below: 8
+  action:
+    service: notify.ios_iphone
+    data:
+      message: "Autotallin lämpötila alhainen: {{states.sensor.autotalli_lampo.state}} °C!"
+      data:
+        push:
+          badge: 5

@@ -1,0 +1,7 @@
+*
+!*.yaml
+!*.dash
+!scenes
+!.gitignore
+secrets.yaml
+known_devices.yaml

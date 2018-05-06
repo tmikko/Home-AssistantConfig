@@ -1,0 +1,570 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 105
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Helsinki
+
+
+  customize:
+    light.keittio_katto_11:
+      hidden: true
+    light.keittio_katto_12:
+      hidden: true
+    light.keittio_katto_13:
+      hidden: true
+    light.keittio_katto_14:
+      hidden: true
+    light.keittio_katto_21:
+      hidden: true
+    light.keittio_katto_22:
+      hidden: true
+    light.keittio_katto_23:
+      hidden: true
+    light.keittio_katto_24:
+      hidden: true
+    light.keittio_kattovalot:
+      hidden: true
+
+#    light.ruokapoyta_2:
+#      hidden: true
+#    light.ruokapoyta_3:
+#      hidden: true
+#    light.keittio_spotit:
+#      friendly_name: Keittiön spotit
+    light.keittio_ruokapoyta:
+      friendly_name: Ruokapöytä
+      hidden: true
+    device_tracker.iphone_mt:
+      friendly_name: Mikko
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+  # Mikko 20.12. Fix for Macbook Pro Safari not loading on HA voice0.60 issue
+  javascript_version: es5
+  
+# Enables configuration UI
+config:
+
+logger:
+  #default: debug
+  default: warning
+  #logs:
+  #homeassistant.components.switch: debug
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret base_url
+
+  cors_allowed_origins:
+    - https://reformedreality.com
+    - http://reformedreality.com
+
+tellstick:
+  host: core-tellstick
+  port: [50800, 50801]
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+
+# IOS
+ios:
+
+mqtt:
+  broker: 192.168.1.99
+  protocol: 3.1
+
+light:
+  - platform: mqtt_json
+    name: "WC LED"
+    state_topic: "MyHome/Toilet/stat/multisensor"
+    command_topic: "MyHome/Toilet/tele/multisensor"
+    brightness: true
+    flash: true
+    rgb: true
+    optimistic: false
+    qos: 0
+
+  # Example configuration.yml entry
+  - platform: mqtt
+    name: "WC alavalo"
+    state_topic: "MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT"
+    # Example:    MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT {"PWM":{"PWM1":600, "PWM2":0}}
+    state_value_template: >-
+      {% if value_json.PWM.PWM1 > 0 %}
+        ON
+      {% else %}
+        OFF
+      {% endif %}
+    command_topic: "MyHome/toilet/cmnd/quinled_pwm_dimmer_1/PWM1"
+    brightness_state_topic: "MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT"
+    brightness_command_topic: "MyHome/toilet/cmnd/quinled_pwm_dimmer_1/PWM1"
+    brightness_value_template: "{{ value_json.PWM.PWM1 }}"
+    on_command_type: "brightness"
+    brightness_scale: 900
+    availability_topic: "MyHome/toilet/tele/quinled_pwm_dimmer_1/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+    retain: false
+
+  - platform: mqtt
+    name: "WC ylävalo"
+    state_topic: "MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT"
+    # Example:    MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT {"PWM":{"PWM1":600, "PWM2":0}}
+    state_value_template: >-
+      {% if value_json.PWM.PWM2 > 0 %}
+        ON
+      {% else %}
+        OFF
+      {% endif %}
+    command_topic: "MyHome/toilet/cmnd/quinled_pwm_dimmer_1/PWM2"
+    brightness_state_topic: "MyHome/toilet/stat/quinled_pwm_dimmer_1/RESULT"
+    brightness_command_topic: "MyHome/toilet/cmnd/quinled_pwm_dimmer_1/PWM2"
+    brightness_value_template: "{{ value_json.PWM.PWM2 }}"
+    on_command_type: "brightness"
+    brightness_scale: 900
+    availability_topic: "MyHome/toilet/tele/quinled_pwm_dimmer_1/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+    retain: false
+    
+  - platform: tellstick
+  - platform: group
+    name: Keittiön katto HA
+    entities:
+      - light.keittio_katto_11
+      - light.keittio_katto_12
+      - light.keittio_katto_13
+      - light.keittio_katto_14
+      - light.keittio_katto_21
+      - light.keittio_katto_22
+      - light.keittio_katto_23
+      - light.keittio_katto_24
+  - platform: group
+    name: Ruokapoytä HA
+    entities:
+      - light.ruokapoyta_1
+      - light.ruokapoyta_2
+
+
+# Weather prediction
+sensor:
+  - platform: yr
+  - platform: mqtt
+    name: "Lattialämmitys"
+    state_topic: "MyHome/FloorHeatingWaterTemperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Autotalli lämpö"
+    state_topic: "MyHome/Garage/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Autotalli kosteus"
+    state_topic: "MyHome/Garage/Sensor1/Humidity"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Keittio"
+    state_topic: "MyHome/Kitchen/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Makuuhuone lampo"
+    state_topic: "MyHome/Bedroom/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Makuuhuone kosteus"
+    state_topic: "MyHome/Bedroom/Sensor1/Humidity"
+    unit_of_measurement: "%"
+#  - platform: mqtt
+#    name: "Olohuone"
+#    state_topic: "MyHome/LivingRoom/Sensor1/Humidity"
+#    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Olohuone lux"
+    state_topic: "MyHome/LivingRoom/Sensor1/Lightness"
+    unit_of_measurement: "LUX"
+#  - platform: mqtt
+#    name: "Olohuone"
+#    state_topic: "MyHome/LivingRoom/Sensor1/Temperature"
+#    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "MH Janna"
+    state_topic: "MyHome/BedroomJanna/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Varasto"
+    state_topic: "MyHome/StorageRoom/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Kylpyhuone lämpö"
+    state_topic: "MyHome/Bathroom/Sensor1/Temperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Ulkolämpö"
+    state_topic: "MyHome/OutdoorTemperature"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Kylpyhuone kosteus"
+    state_topic: "MyHome/Bathroom/Sensor1/Humidity"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Vesi"
+    state_topic: "MyHome/Consumption/Water/PerMinute"
+    unit_of_measurement: "ltr/min"  
+  - platform: mqtt
+    name: "Sähkö_W"
+    state_topic: "MyHome/Consumption/tele/electricity/current_cons"
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Sähkö_Wh"
+    state_topic: "MyHome/Consumption/tele/electricity/Wh_counter"
+    unit_of_measurement: "Wh"
+  - platform: mqtt
+    state_topic: "MyHome/Toilet/stat/multisensor"
+    name: "WC Humidity"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.humidity | round(1) }}'
+  - platform: mqtt
+    state_topic: "MyHome/Garage/stat/multisensor"
+    name: "Autotalli kosteus BRUH"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.humidity | round(1) }}'
+  - platform: mqtt
+    state_topic: "MyHome/Toilet/stat/multisensor"
+    name: "WC LDR"
+    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
+    unit_of_measurement: "LUX"
+    value_template: '{{ value_json.ldr }}'
+  - platform: mqtt
+    state_topic: "MyHome/Garage/stat/multisensor"
+    name: "Autotalli LDR"
+    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
+    unit_of_measurement: "LUX"
+    value_template: '{{ value_json.ldr }}'
+  - platform: mqtt
+    state_topic: "MyHome/Toilet/stat/multisensor"
+    name: "WC Temperature"
+    unit_of_measurement: "°C"
+    value_template: '{{ value_json.temperature | round(1) }}'
+  - platform: mqtt
+    state_topic: "MyHome/Garage/stat/multisensor"
+    name: "Autotalli lämpö BRUH"
+    unit_of_measurement: "°C"
+    value_template: '{{ value_json.temperature | round(1) }}'
+#  - platform: mqtt
+#    state_topic: "MyHome/Toilet/stat/multisensor"
+#    name: "WC Real Feel"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value_json.heatIndex | round(1) }}'
+  - platform: mqtt
+    state_topic: "MyHome/Controllers/stat/RotaryEncoder_1"
+    name: Rotary encoder 1
+    value_template: '{{ value_json.encoderPosition }}'
+  - platform: mqtt
+    state_topic: "MyHome/Controllers/stat/RotaryEncoder_1"
+    name: Rotary encoder 1 button
+    value_template: '{{ value_json.buttonState }}'
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    monitored_conditions:
+      - summary
+      - icon
+      - daily_summary
+      - hourly_summary
+      - temperature
+      - humidity
+      - precip_probability
+      - precip_intensity
+      - precip_type
+      - wind_speed
+      - pressure
+      - wind_bearing
+      - apparent_temperature
+      - temperature_min
+      - temperature_max
+    forecast:
+      - 1
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: "MyHome/Toilet/stat/multisensor"
+    name: "WC PIR"
+    payload_off: "standby"
+    payload_on: "motion detected"
+    value_template: '{{ value_json.motion }}'
+    device_class: motion
+  - platform: mqtt
+    state_topic: "MyHome/Garage/stat/multisensor"
+    name: "Autotalli PIR"
+    payload_off: "standby"
+    payload_on: "motion detected"
+    value_template: '{{ value_json.motion }}'
+    device_class: motion
+  - platform: template
+    sensors:
+      garage_lights_on:
+        friendly_name: "Garage lights on"
+        value_template: >-
+          {{ states('sensor.autotalli_ldr')|int > 120 }}
+  - platform: mqtt
+    state_topic: "MyHome/Webcam2/Motion"
+    name: "Webcam2 motion"
+    payload_off: "motion_event_end"
+    payload_on: "motion_event_start"
+#    value_template: '{{ value_json.motion }}'
+    device_class: motion
+
+
+switch:
+  - platform: mqtt
+    name: "Bathroom Sonoff1 Switch"
+    state_topic: "MyHome/Bathroom/stat/sonoff_basic_1/POWER"
+    command_topic: "MyHome/Bathroom/cmnd/sonoff_basic_1/POWER"
+    availability_topic: "MyHome/Bathroom/tele/sonoff_basic_1/LWT"
+    payload_on: "ON"  
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+    retain: false
+
+  - platform: command_line
+    switches:
+      auton_lammitys:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/178/actions/StartTimer/invoke && /usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/176/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/178/actions/StopTimer/invoke && /usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/176/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/176"
+#        value_template: '{{ value_json.attributes[5].value == "Active" }}'
+        value_template: '{{ value_json.attributes[0].value == "On" }}'
+        friendly_name: "Auton lämmitys"
+
+      autotallin_lampopuhallin:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/93/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/93/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/93"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Autotallin lämpöpuhallin"
+
+      autotallin_kuivain:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/302/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/302/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/302"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Autotallin kuivain"
+
+      autotallin_lisalammitys_2h:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/368/actions/StartTimer/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/368/actions/StopTimer/invoke && /usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/250/actions/EnableTrigger/invoke && /usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/250/actions/CheckNow/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/368"
+        value_template: '{{ value_json.attributes[5].value == "Active" }}'
+        friendly_name: "Autotallin lisälämmitys 2h"
+
+      tyohuone_alavalo:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/84/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/84/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/84"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Työhuone alavalo"
+
+      tyohuone_ylavalo:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/64/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/64/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/64"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Työhuone ylavalo"
+
+      takapiha_pylvasvalo:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/116/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/116/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/116"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Takapiha pylväs"
+
+      etupiha_pylvasvalo:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/182/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/182/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/182"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Etupiha käpy"
+
+      tyohuone_genelec:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/255/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/255/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/255"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Työhuone Genelecit"
+
+      huippuimuri:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/81/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/81/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/81"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Huippuimuri"
+
+      olohuone_koristepuu:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/252/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/252/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/252"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Olohuone puukoriste"
+
+      makuuhuone_yopoyta1:
+        command_on: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/379/actions/on/invoke"
+        command_off: "/usr/bin/curl -X POST http://192.168.1.99:8020/rest/items/379/actions/off/invoke"
+        command_state: "/usr/bin/curl -X GET http://192.168.1.99:8020/rest/items/379"
+        value_template: '{{ value_json.attributes[0].value == "On" }}'      
+        friendly_name: "Makuuhuone yöpöytä1"
+
+  - platform: tellstick
+
+input_select:
+  who_cooks:
+    name: Who cooks today
+    options:
+     - Paulus
+     - Anne Therese
+    initial: Anne Therese
+    icon: mdi:panda
+  living_room_preset:
+    options:
+      - Visitors
+      - Visitors with kids
+      - Home Alone
+
+# Example configuration.yaml entry
+alarm_control_panel:
+  - platform: manual_mqtt
+    state_topic: "home/alarm"
+    command_topic: "home/alarm/set"
+    name: Home Alarm
+    code: 1111
+    pending_time: 30
+    trigger_time: 1800
+    disarm_after_trigger: false
+    delay_time: 20
+#    trigger_time: 4
+#    disarmed:
+#      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+    armed_away:
+      pending_time: 15
+      delay_time: 15
+
+camera:
+  - platform: local_file
+    file_path: /share/motion/latest.jpg
+    name: "Kitchen cam"
+  - platform: local_file
+    file_path: /share/motion/MOTION.jpg
+    name: "Kitchen last captured motion"
+  - platform: mjpeg
+    still_image_url: http://192.168.1.9:8081/snapshot.jpg
+    mjpeg_url: http://192.168.1.9:8081/mjpeg
+    name: Office cam
+
+#android_ip_webcam:
+#  - host: 192.168.1.7
+#    sensors:
+#      - audio_connections
+#      - battery_level
+#      - battery_temp
+#      - battery_voltage
+#      - light
+#      - motion
+#      - pressure
+#      - proximity
+#      - sound
+#      - video_connections
+#    switches:
+#      - exposure_lock
+#      - ffc
+#      - focus
+#      - gps_active
+#      - night_vision
+#      - overlay
+#      - torch
+#      - whitebalance_lock
+#      - video_recording
+
+#input_number:
+#  toilet_rotary:
+#    name: Toilet rotary
+#    min: 0
+#    max: 100
+#    step: 1
+#    mode: box
+#camera:
+#  - platform: ffmpeg
+#    input: rtsp://192.168.1.7:10554/udp/av0_0
+#    name: IP camera
+
+#   - platform: onvif
+#    host: http://192.168.1.7:10080/onvif/device_service
+#     host: 192.168.1.7
+#     port: 10080
+#     name: camera onvif
+# Text to speech
+#tts:
+#  - platform: google
+
+group: !include groups.yaml
+
+#group:
+#  keittio_katto_group:
+#    name: Keittio katto 
+#    view: no
+#    entities:
+#      - light.keittio_katto_11
+#      - light.keittio_katto_12
+#      - light.keittio_katto_13
+#      - light.keittio_katto_14
+#      - light.keittio_katto_21
+#      - light.keittio_katto_22
+#      - light.keittio_katto_23
+#      - light.keittio_katto_24
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+#media_player:
+#  - platform: panasonic_viera
+#    host: 192.168.1.76

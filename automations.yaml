@@ -1,0 +1,140 @@
+#- alias: Rotary Toilet alavalo Change
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.rotary_encoder_1
+#  action:
+#    - service: light.turn_on
+#      data_template:
+#        entity_id: light.wc_alavalo
+#        brightness: "{{ states.sensor.toilet_rotary_encoder.state | int * 8 -1 }}"
+- alias: Rotary button pressed shortly
+  trigger:
+    - platform: state
+      entity_id: sensor.rotary_encoder_1_button
+      to: '1'
+  action:
+    - service: switch.toggle
+      data:
+        entity_id: switch.tyohuone_alavalo
+- alias: Rotary button pressed long, do something
+  trigger:
+    - platform: state
+      entity_id: sensor.rotary_encoder_1_button
+      to: '2'
+  action:
+    - service: switch.toggle
+      data:
+        entity_id: switch.tyohuone_ylavalo
+- alias: Notify iOS Autotalli
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.autotalli_lampo
+    below: 5
+  action:
+    service: notify.ios_iphone_mt
+    data:
+      message: "Autotallin lämpötila alhainen: {{states.sensor.autotalli_lampo.state}} °C!"
+      data:
+        push:
+          badge: 5
+- alias: 'Send notification when alarm triggered'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'triggered'
+  action:
+    - service: notify.notify
+      data:
+        message: "ALARM! The alarm has been triggered"
+    - service: mqtt.publish
+      data:
+        topic: "home/notification"
+        payload: "Hälytys! Murtohälytys on lauennut. Toistan. Murtohälytys on lauennut. Vartioliikkeelle ilmoitettu."
+## Motion sensor wc
+- alias: WC Lights off when motion off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wc_pir
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.wc_ylavalo
+        brightness: 0
+- alias: WC Lights on when motion on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wc_pir
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+#      - condition: template
+#        value_template: '{{ states.light.wc_ylavalo.state == "off" }}'
+      - condition: state
+        entity_id: light.wc_ylavalo
+        state: 'off'  
+      - condition: numeric_state
+        entity_id: sensor.wc_ldr
+        below: 100
+  action:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.wc_ylavalo
+        brightness: >-
+          {% if now().strftime('%H')| int >= 22 %}
+            100
+          {% elif now().strftime('%H')| int < 7 %}
+            10
+          {% elif now().strftime('%H')| int >= 7 %}
+            255
+          {% endif %}
+##TESTTEST##
+- alias: Keittiö työtasot off when living room preset == Visitors
+  trigger:
+    - platform: state
+      entity_id: input_select.living_room_preset
+      to: 'Visitors'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.keittio_tyotasot
+
+
+## ALARM ##
+- alias: 'Trigger alarm while armed away'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wc_pir
+      to: 'on' 
+    - platform: state
+      entity_id: binary_sensor.autotalli_pir
+      to: 'on'
+#    - platform: state
+#      entity_id: sensor.door
+#      to: 'open'
+#    - platform: state
+#      entity_id: sensor.window
+#      to: 'open'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+  action:
+    service: alarm_control_panel.alarm_trigger
+    entity_id: alarm_control_panel.home_alarm
+
+- alias: Navigate HAD
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.webcam2_motion
+      to: 'on'
+  action:
+    - event: hadashboard
+      event_data:
+        command: navigate
+        timeout: 20
+        target: Main
+        sticky: 0
